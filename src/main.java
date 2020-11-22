@@ -60,10 +60,10 @@ public class main {
     //计算功能，接受运算数和运算符 进行运算 返回结果
     static int count(int number1,int number2,String mathSymbol){
         int answer = 200;
-        if(mathSymbol == "+"){
+        if(mathSymbol.equals("+")){
             answer = number1 + number2;
         }
-        if(mathSymbol == "-"){
+        if(mathSymbol.equals("-")){
             answer = number1 - number2;
         }
         return answer;
