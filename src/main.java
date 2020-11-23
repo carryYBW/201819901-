@@ -32,13 +32,13 @@ public class main {
         System.out.println("您已经退出。");
 
     }
-    //生成指定范围的随机数
+    //生成指定范围的随机数  输入一个范围，返回一个随机数
     static int creatNumber(int range){
         Random random = new Random();
         int r = random.nextInt(range);
         return r;
     }
-    //生成随机算术符号（+ 或 -）
+    //生成随机算术符号（+ 或 -） 等比例返回“+” 或 “-”
     static String creatMathSymbol(){
         int no = creatNumber(2);
         String mathSymbol;
@@ -50,7 +50,7 @@ public class main {
         return mathSymbol;
     }
 
-    //生成算式功能 运用字符串的方式
+    //生成算式功能 运用字符串的方式  传入两个数，一个运算符 返回一个字符串类型的算式
     static String creatEquation(int number1,int number2,String mathSymbol){
 
         String s = number1 + mathSymbol + number2 + "=";
@@ -59,7 +59,9 @@ public class main {
 
     //计算功能，接受运算数和运算符 进行运算 返回结果
     static int count(int number1,int number2,String mathSymbol){
+        //初始化答案等于200
         int answer = 200;
+        //根据运算符判断运算
         if(mathSymbol.equals("+")){
             answer = number1 + number2;
         }
@@ -70,7 +72,9 @@ public class main {
     }
     //检验算式是否符合要求  大于0且小于100
     static boolean chectOut(int number1,int number2,String mathSymbol){
+        //调用计算函数
         int answer = count(number1,number2,mathSymbol);
+        //不符合要求返回false
         if(answer < 0 || answer >=100){
             return false;
         }
@@ -146,12 +150,15 @@ public class main {
     }
     //重复算式的检验,如果没有s将其添加在数组末尾，如果有返回false
     static boolean checkRepeat(int n,String s, String[] strings){
-
+        //strings代表字符串数组，存储合规的算式字符串，s代表字符串，代表目前要存储的对象，n代表字符串数组中已经存储多少个元素
+        //进行循环，
         for( int i = 0;i<= n;i++){
+            //判断之前元素有没有一样的元素
             if(s.equals(strings[i])){
                 return false;
             }
         }
+        //如果没有变将其存储到当前元素的最后一位
         strings[n] = s;
         return true;
     }
