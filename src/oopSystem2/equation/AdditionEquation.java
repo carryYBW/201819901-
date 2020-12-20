@@ -10,4 +10,6 @@ public class AdditionEquation extends Equation {
     public void countAnswer() {
             this.setAnswer(this.getLeftNumber() + this.getRightNumber());
     }
+
+
 }

@@ -1,21 +1,29 @@
 package oopSystem2.exercise;
 
 
+import com.csvreader.CsvReader;
+import com.csvreader.CsvWriter;
 import oopSystem2.equation.AdditionEquation;
 import oopSystem2.equation.Equation;
 import oopSystem2.equation.SubtractionEquation;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Exercise{
 
     private int amount; //题目数量
-    private Equation[] equations;//题目数组
+    protected Equation[] equations;//题目数组
     private int range;   //题目运算数范围
     private int percent; //加法所占半分比*100
     private int ceiling; //运算结果上限
     private int floor;   //运算结果下限
 
+    public  Equation[] getEquations(){
+        return equations;
+    }
     public int getAmount() {
         return amount;
     }
@@ -85,7 +93,6 @@ public abstract class Exercise{
 
     protected abstract Equation initAnEquation();
 
-
     public void createExercise(){
         int i = 0;
         while(i < this.amount){
@@ -142,5 +149,73 @@ public abstract class Exercise{
             i++;
         }
         System.out.println();
+
+    }
+    //将习题的算式存入list中
+    private ArrayList<String[]> equationsToList(){
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        for (int i = 0; i < this.getAmount(); i++) {
+            String[] strings = { equations[i].getLeftNumber()+"",equations[i].getRightNumber()+"",equations[i].getOperator(),equations[i].getAnswer()+"" };
+            list.add(strings);
+        }
+        return list;
+    }
+    //将List中存储的数据设置习题集数据
+    private void listToequations(ArrayList<String[]> list){
+        for(int i = 0 ; i < list.size();i++){
+            equations[i].setLeftNumber(Integer.parseInt(list.get(i)[0]));
+            equations[i].setRightNumber(Integer.parseInt(list.get(i)[1]));
+            equations[i].setOperator(list.get(i)[2]);
+            equations[i].setAnswer(Integer.parseInt(list.get(i)[3]));
+        }
+
+    }
+    //写入文件
+    public  void writeCSV(String pathCSVWrite){
+
+//        String pathCSVWrite = "D:\\01-studyData\\2020大三实验报告\\软件构造\\mySystem\\src\\oopSystem2\\csvFile\\writetest2";
+            ArrayList<String[]> list = equationsToList();
+
+        try {
+            String[] headers = {"运算数1","运算数2","运算符","结果"};
+            CsvWriter csvWriter = new CsvWriter(pathCSVWrite,',' , Charset.forName("gb2312"));
+            csvWriter.writeRecord(headers);
+
+            for(int i = 0; i < list.size();i++){
+                String[] csvContent = list.get(i);
+                csvWriter.writeRecord(csvContent);
+            }
+
+            csvWriter.close();
+            System.out.println("写入完成");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //从文件中读取
+    public  void readCSV(String pathCSV){
+
+        ArrayList<String[]> listread = new ArrayList<String[]>();
+        try {
+            //创建
+            CsvReader csvReader = new CsvReader(pathCSV,',' , Charset.forName("gb2312"));
+            csvReader.readHeaders();
+           //读取
+            while(csvReader.readRecord()){
+                listread.add(csvReader.getValues());
+            }
+            //关闭
+            csvReader.close();
+            System.out.println("读入完成");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //调用函数。将读取的内容复制给对象
+        listToequations(listread);
     }
 }

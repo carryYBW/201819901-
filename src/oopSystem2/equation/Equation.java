@@ -22,6 +22,14 @@ public abstract class Equation {
         return operator;
     }
 
+    public void setLeftNumber(int leftNumber) {
+        this.leftNumber = leftNumber;
+    }
+
+    public void setRightNumber(int rightNumber) {
+        this.rightNumber = rightNumber;
+    }
+
     public void setOperator(String operator) {
         this.operator = operator;
     }

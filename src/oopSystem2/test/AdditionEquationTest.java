@@ -9,19 +9,17 @@ public class AdditionEquationTest {
     public void setUp() throws Exception {
         System.out.println("测试开始");
     }
-
     @org.junit.After
     public void tearDown() throws Exception {
         System.out.println("测试结束\n");
     }
-
     @Test
     public void createOperator() {
         AdditionEquation additionEquation = new AdditionEquation();
         additionEquation.createOperator();
+
         System.out.println(additionEquation.getOperator());
     }
-
     @Test
     public void countAnswer() {
         AdditionEquation additionEquation = new AdditionEquation();

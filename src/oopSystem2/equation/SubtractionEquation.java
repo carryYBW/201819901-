@@ -12,5 +12,4 @@ public class SubtractionEquation extends Equation {
         this.setAnswer(this.getLeftNumber() - this.getRightNumber());
     }
 
-
 }
